@@ -83,7 +83,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # Must be at the top.
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # To serve static files in PaaS
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # To serve static files in PaaS. To be removed if S3 is being used.
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
