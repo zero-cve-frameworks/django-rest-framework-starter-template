@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # ---
     'apps.base.apps.BaseConfig',
+    'apps.api.apps.ApiConfig',
     # --- REST APIs and authentication
     'drf_yasg',
     'corsheaders',
