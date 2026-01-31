@@ -1,5 +1,13 @@
 # Django REST Framework Starter Template
 
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![Django](https://img.shields.io/badge/Django-6.0+-green.svg)
+![DRF](https://img.shields.io/badge/DRF-3.16+-red.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Maintained](https://img.shields.io/badge/Maintained-yes-green.svg)
+![Code style](https://img.shields.io/badge/code%20style-black-000000.svg)
+![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)
+
 A production-ready Django REST Framework starter template with JWT authentication, CORS configuration, API documentation, and environment-based settings.
 
 ## Features
