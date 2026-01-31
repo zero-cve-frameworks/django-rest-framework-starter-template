@@ -1,9 +1,10 @@
 from django.views.generic import TemplateView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.base.serializers import HealthCheckSerializer
+from apps.base.serializers import HealthCheckSerializer, ProtectedDataSerializer
 from core.constants import BRAND_NAME, VERSION
 
 
@@ -30,5 +31,28 @@ class HealthCheckAPIView(APIView):
         """Health check endpoint."""
         serializer = HealthCheckSerializer(
             {"status": "healthy", "message": f"{BRAND_NAME} API is running", "version": VERSION}
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ProtectedAPIView(APIView):
+    """
+    Protected API endpoint that requires JWT authentication.
+
+    This endpoint demonstrates how to protect an API route with JWT tokens.
+    Users must include a valid JWT token in the Authorization header to access this endpoint.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Protected endpoint that returns user information."""
+        serializer = ProtectedDataSerializer(
+            {
+                "message": f"Welcome {request.user.username}! This is a protected endpoint.",
+                "user_id": request.user.id,
+                "username": request.user.username,
+                "is_authenticated": request.user.is_authenticated,
+            }
         )
         return Response(serializer.data, status=status.HTTP_200_OK)
