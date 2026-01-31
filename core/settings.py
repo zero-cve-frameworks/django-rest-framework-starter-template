@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    # --- Utilities
+    "django_extensions",  # Generate graph model (ERD)
 ]
 
 MIDDLEWARE = [

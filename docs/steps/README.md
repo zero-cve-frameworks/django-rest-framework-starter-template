@@ -1,111 +1,162 @@
-# Steps
+# Steps - How This Repository Was Built
 
-## Project Setup
+This document outlines the step-by-step process of building this Django REST Framework starter template.
 
-### 1. Create Django Project
+## 1. Initial Django Project Setup
+
+Created the base Django project:
 
 ```bash
 django-admin startproject core .
 ```
 
-### 2. Create Base App
+## 2. Created Base App
+
+Created the base app and moved it to `apps/` directory:
 
 ```bash
 python manage.py startapp base
-```
-
-### 3. Move App to `apps` Directory
-
-```bash
 mkdir -p apps
 mv base apps/base
 ```
 
-### 4. Update App Configuration
+Updated `apps/base/apps.py` to use `apps.base` naming convention.
 
-Update `apps/base/apps.py`:
+## 3. Created API App
 
-```python
-from django.apps import AppConfig
-
-class BaseConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.base'
-```
-
-**Note**: `core/settings.py` has been configured with REST Framework (JWT authentication, CORS), database (environment-based with dj-database-url), static files, media files, security headers, and logging.
-
-### 5. Install Dependencies
+Created the API app to organize and expose API endpoints:
 
 ```bash
-pip install -r requirements.txt
+python manage.py startapp api
+mv api apps/api
 ```
 
-Required packages:
-- Django
-- djangorestframework
-- python-decouple
-- drf-yasg
-- djangorestframework-simplejwt
-- django-cors-headers
-- dj-database-url
-- black (code formatting)
-- isort (import sorting)
-- pre-commit (git hooks)
+Updated `apps/api/apps.py` to use `apps.api` naming convention.
 
-### 6. Setup Pre-commit Hooks (Recommended)
+## 4. Configured REST Framework
 
-Pre-commit hooks automatically format code and check for issues before commits:
+Added Django REST Framework dependencies and configuration:
 
-```bash
-# Install pre-commit hooks
-pre-commit install
+- Added `rest_framework`, `rest_framework_simplejwt` to `INSTALLED_APPS`
+- Configured JWT authentication in `REST_FRAMEWORK` settings
+- Set up `SIMPLE_JWT` configuration with 30-day token lifetime
 
-# (Optional) Run on all files once to format existing code
-pre-commit run --all-files
-```
+## 5. Added CORS Support
 
-The hooks will:
-- Format code with black (120 character line length)
-- Sort imports with isort (black-compatible)
-- Check for trailing whitespace, file endings, and other issues
+Configured CORS for frontend communication:
 
-**Note**: If you need to bypass hooks (not recommended), use `git commit --no-verify`
+- Added `corsheaders` to `INSTALLED_APPS`
+- Added `CorsMiddleware` at the top of middleware stack
+- Configured CORS settings based on environment (DEV/PROD)
+- Set `CORS_ALLOW_CREDENTIALS = True` for JWT authentication
 
-### 7. Environment Configuration
+## 6. Added API Documentation
 
-Create `.env` file from `.env.template`:
+Set up Swagger/ReDoc documentation:
 
-```bash
-cp .env.template .env
-```
+- Added `drf_yasg` to `INSTALLED_APPS`
+- Created `core/views.py` with `schema_view` configuration
+- Added Swagger and ReDoc URLs (available in DEBUG mode)
 
-Update `.env` with your configuration:
-- `SECRET_KEY`: Generate a Django secret key
-- `DATABASE_URL`: For production (optional in development, uses SQLite by default)
-- `FRONTEND_URL`: Your frontend URL (default: http://localhost:3000)
-- `ENVIRONMENT`: Set to `DEV` for development or `PROD` for production
+## 7. Environment-Based Configuration
 
-### 8. Database Setup
+Set up environment-based settings:
 
-Run migrations:
+- Created `core/constants.py` with `DEV`, `PROD`, `BRAND_NAME`, `VERSION`
+- Updated `settings.py` to use `decouple` for environment variables
+- Configured environment-based `DEBUG`, `ALLOWED_HOSTS`, CORS, and security settings
+- Created `.env.template` with all required variables
 
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
+## 8. Database Configuration
 
-### 9. Create Superuser (Optional)
+Configured database settings:
 
-```bash
-python manage.py createsuperuser
-```
+- Added `dj-database-url` for flexible database configuration
+- Set up SQLite for development, PostgreSQL/MySQL via `DATABASE_URL` for production
+- Added connection pooling with `conn_max_age=600`
 
-### 10. Run Development Server
+## 9. Security Headers
 
-```bash
-python manage.py runserver
-```
+Added production-ready security settings:
+
+- HSTS configuration
+- SSL redirect (production only)
+- Secure cookies (production only)
+- XSS protection
+- CSRF trusted origins
+
+## 10. Static and Media Files
+
+Configured static and media file handling:
+
+- Set `STATIC_ROOT` and `STATIC_URL`
+- Configured `STATICFILES_DIRS`
+- Set `MEDIA_ROOT` and `MEDIA_URL`
+- Added static/media serving in DEBUG mode
+
+## 11. Created Landing Page
+
+Added a simple landing page in the base app:
+
+- Created `apps/base/templates/base/index.html` with monochromatic design
+- Created `IndexView` (TemplateView) in `apps/base/views.py`
+- Added root URL route in `apps/base/urls.py`
+
+## 12. Created Example API Endpoint
+
+Added a health check API endpoint as an example:
+
+- Created `HealthCheckSerializer` in `apps/base/serializers.py`
+- Created `HealthCheckAPIView` (APIView) in `apps/base/views.py`
+- Exposed via `apps/api/urls.py` at `/api/health/`
+- Demonstrates the pattern for creating and exposing APIs
+
+## 13. Code Formatting Setup
+
+Configured code quality tools:
+
+- Added `black>=24.4.2` and `isort>=5.13.2` to requirements
+- Created `pyproject.toml` with black and isort configuration (120 char line length)
+- Set up pre-commit hooks with `.pre-commit-config.yaml`
+- Added `pre-commit>=3.6.0` to requirements
+
+## 14. Pre-commit Hooks
+
+Set up automated code formatting:
+
+- Created `.pre-commit-config.yaml` with:
+  - Basic file checks (trailing whitespace, file endings, etc.)
+  - Black code formatter
+  - isort import sorter
+- Added `pre-commit install` to `init.sh`
+
+## 15. ERD Generation Setup
+
+Added Entity Relationship Diagram generation:
+
+- Added `django-extensions>=3.2.3` and `pydotplus>=2.0.2` to requirements
+- Added `django_extensions` to `INSTALLED_APPS`
+- Created `erd.sh` script to generate model diagrams
+- Created `docs/design/` directory structure
+- Added ERD documentation
+
+## 16. Initialization Script
+
+Created `init.sh` for quick project setup:
+
+- Upgrades pip
+- Installs dependencies
+- Installs pre-commit hooks
+- Runs database migrations
+
+## 17. Documentation
+
+Created comprehensive documentation:
+
+- Main `README.md` with quick start guide
+- `docs/steps/README.md` (this file) documenting the build process
+- `docs/design/README.md` for ERD generation
+- Updated project structure in all docs
 
 ## Project Structure
 
@@ -132,40 +183,38 @@ jobrio-backend/
 │       └── migrations/
 ├── core/                   # Django project settings
 │   ├── __init__.py
-│   ├── settings.py
+│   ├── settings.py        # Main configuration
 │   ├── urls.py            # Root URL configuration
 │   ├── views.py           # Schema view for API docs
 │   ├── constants.py       # Environment constants
 │   ├── wsgi.py
 │   └── asgi.py
+├── docs/
+│   ├── design/
+│   │   ├── images/        # ERD diagrams
+│   │   └── README.md
+│   └── steps/
+│       └── README.md      # This file
 ├── manage.py
 ├── requirements.txt
 ├── .env.template
 ├── pyproject.toml         # Black and isort configuration
 ├── .pre-commit-config.yaml # Pre-commit hooks configuration
 ├── init.sh                 # Initialization script
+├── erd.sh                  # Generate Entity Relationship Diagram
 └── README.md
 ```
 
-## API Documentation
-
-Once the server is running, access API documentation:
-
-- **Swagger UI**: http://localhost:8000/swagger/
-- **ReDoc**: http://localhost:8000/redoc/
-
-(Only available in DEBUG mode)
-
-## Configuration Highlights
+## Key Features Implemented
 
 ### REST Framework
 - JWT Authentication configured
 - CORS enabled for frontend communication
-- API documentation with drf-yasg
+- API documentation with drf-yasg (Swagger/ReDoc)
 
 ### Database
-- Development: SQLite (default)
-- Production: Configure via `DATABASE_URL` environment variable
+- Environment-based configuration (SQLite dev, PostgreSQL/MySQL prod)
+- Connection pooling
 
 ### Security
 - Environment-based security settings
@@ -176,3 +225,8 @@ Once the server is running, access API documentation:
 - Black code formatter (120 character line length)
 - isort import sorter (black-compatible)
 - Pre-commit hooks to enforce formatting automatically
+
+### Development Tools
+- django-extensions for ERD generation
+- Entity Relationship Diagram generator (`./erd.sh`)
+- Initialization script for quick setup

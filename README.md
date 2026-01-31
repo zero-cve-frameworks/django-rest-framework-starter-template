@@ -69,7 +69,9 @@ A production-ready Django REST Framework starter template with JWT authenticatio
 ├── requirements.txt
 ├── .env.template
 ├── pyproject.toml         # Black and isort configuration
-└── .pre-commit-config.yaml # Pre-commit hooks configuration
+├── .pre-commit-config.yaml # Pre-commit hooks configuration
+├── init.sh                 # Initialization script
+└── erd.sh                  # Generate Entity Relationship Diagram
 ```
 
 ## Configuration
@@ -106,3 +108,18 @@ git commit --no-verify
 When running in DEBUG mode, access API documentation at:
 - Swagger UI: `/swagger/`
 - ReDoc: `/redoc/`
+
+## Entity Relationship Diagram (ERD)
+
+Generate a visual diagram of your database models:
+
+```bash
+./erd.sh
+```
+
+This creates `docs/design/images/models.jpg` showing all models and their relationships.
+
+**Note**: Requires Graphviz to be installed on your system:
+- macOS: `brew install graphviz`
+- Ubuntu/Debian: `sudo apt-get install graphviz`
+- Windows: Download from [Graphviz website](https://graphviz.org/download/)
