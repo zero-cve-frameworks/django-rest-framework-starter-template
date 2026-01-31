@@ -113,17 +113,27 @@ python manage.py runserver
 jobrio-backend/
 ├── apps/
 │   ├── __init__.py
-│   └── base/              # Base app (renamed from scrapers)
+│   ├── api/               # API app - organizes and exposes API endpoints
+│   │   ├── __init__.py
+│   │   ├── apps.py
+│   │   ├── urls.py        # API URL routing
+│   │   └── views.py       # Re-exports views from other apps
+│   └── base/              # Base app - contains business logic
 │       ├── __init__.py
 │       ├── admin.py
 │       ├── apps.py
 │       ├── models.py
-│       ├── views.py
+│       ├── serializers.py  # DRF serializers
+│       ├── views.py        # API views and template views
+│       ├── urls.py         # Base app URLs
+│       ├── templates/      # HTML templates
+│       │   └── base/
+│       │       └── index.html
 │       └── migrations/
 ├── core/                   # Django project settings
 │   ├── __init__.py
 │   ├── settings.py
-│   ├── urls.py
+│   ├── urls.py            # Root URL configuration
 │   ├── views.py           # Schema view for API docs
 │   ├── constants.py       # Environment constants
 │   ├── wsgi.py
@@ -131,6 +141,9 @@ jobrio-backend/
 ├── manage.py
 ├── requirements.txt
 ├── .env.template
+├── pyproject.toml         # Black and isort configuration
+├── .pre-commit-config.yaml # Pre-commit hooks configuration
+├── init.sh                 # Initialization script
 └── README.md
 ```
 
