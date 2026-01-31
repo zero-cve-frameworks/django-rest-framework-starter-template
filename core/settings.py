@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 
+import dj_database_url
 from decouple import config
 from django.core.management.utils import get_random_secret_key
 
@@ -48,25 +49,6 @@ else:
     CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = [
-    "OPTIONS",
-    "GET",
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE",
-]
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-]
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_HSTS_SECONDS = 31536000  # 1 year
@@ -131,13 +113,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+database_url = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+if ENVIRONMENT == PROD:
+    database_url = config('DATABASE_URL')
+
+DATABASES = {'default': dj_database_url.parse(database_url, conn_max_age=600)}
 
 
 # Password validation
