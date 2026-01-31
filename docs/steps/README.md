@@ -49,8 +49,30 @@ Required packages:
 - djangorestframework-simplejwt
 - django-cors-headers
 - dj-database-url
+- black (code formatting)
+- isort (import sorting)
+- pre-commit (git hooks)
 
-### 6. Environment Configuration
+### 6. Setup Pre-commit Hooks (Recommended)
+
+Pre-commit hooks automatically format code and check for issues before commits:
+
+```bash
+# Install pre-commit hooks
+pre-commit install
+
+# (Optional) Run on all files once to format existing code
+pre-commit run --all-files
+```
+
+The hooks will:
+- Format code with black (120 character line length)
+- Sort imports with isort (black-compatible)
+- Check for trailing whitespace, file endings, and other issues
+
+**Note**: If you need to bypass hooks (not recommended), use `git commit --no-verify`
+
+### 7. Environment Configuration
 
 Create `.env` file from `.env.template`:
 
@@ -64,7 +86,7 @@ Update `.env` with your configuration:
 - `FRONTEND_URL`: Your frontend URL (default: http://localhost:3000)
 - `ENVIRONMENT`: Set to `DEV` for development or `PROD` for production
 
-### 7. Database Setup
+### 8. Database Setup
 
 Run migrations:
 
@@ -73,13 +95,13 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 8. Create Superuser (Optional)
+### 9. Create Superuser (Optional)
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### 9. Run Development Server
+### 10. Run Development Server
 
 ```bash
 python manage.py runserver
@@ -136,3 +158,8 @@ Once the server is running, access API documentation:
 - Environment-based security settings
 - CORS configured for frontend origin
 - HSTS and security headers enabled in production
+
+### Code Quality
+- Black code formatter (120 character line length)
+- isort import sorter (black-compatible)
+- Pre-commit hooks to enforce formatting automatically
