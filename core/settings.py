@@ -176,6 +176,18 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
 }
 
+SWAGGER_SETTINGS = {
+    "LOGIN_URL": "/admin/login/",  # Redirect Django Login button to admin login
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "JWT authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'",
+        }
+    },
+}
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
