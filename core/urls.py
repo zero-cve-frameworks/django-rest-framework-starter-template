@@ -6,6 +6,7 @@ from django.urls import include, path
 from core.views import schema_view
 
 urlpatterns = [
+    path('', include('apps.base.urls')),
     path('admin/', admin.site.urls),
 ]
 
