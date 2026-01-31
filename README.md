@@ -103,6 +103,19 @@ Pre-commit hooks run automatically on every commit. To bypass (not recommended):
 git commit --no-verify
 ```
 
+## Authentication
+
+JWT authentication is configured and ready to use. See [docs/authentication.md](docs/authentication.md) for detailed instructions on:
+- Obtaining JWT tokens
+- Refreshing tokens
+- Using tokens in API requests
+- Token configuration
+
+**Quick Start:**
+1. Create a superuser: `python manage.py createsuperuser`
+2. Obtain tokens: `POST /api/token/` with username and password
+3. Use token: Include `Authorization: Bearer <token>` header in API requests
+
 ## API Documentation
 
 When running in DEBUG mode, access API documentation at:

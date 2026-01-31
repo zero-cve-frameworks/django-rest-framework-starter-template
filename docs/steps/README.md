@@ -111,6 +111,17 @@ Added a health check API endpoint as an example:
 - Exposed via `apps/api/urls.py` at `/api/health/`
 - Demonstrates the pattern for creating and exposing APIs
 
+## 12.1. Added JWT Token Endpoints
+
+Added JWT token endpoints to enable authentication:
+
+- Added `TokenObtainPairView` and `TokenRefreshView` imports to `apps/api/urls.py`
+- Added `/api/token/` endpoint for obtaining access and refresh tokens
+- Added `/api/token/refresh/` endpoint for refreshing access tokens
+- Created `docs/authentication.md` with comprehensive authentication documentation
+
+These endpoints allow users to authenticate and obtain JWT tokens for API access. See [docs/authentication.md](../authentication.md) for detailed usage instructions.
+
 ## 13. Code Formatting Setup
 
 Configured code quality tools:
