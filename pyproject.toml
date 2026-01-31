@@ -1,8 +1,3 @@
-[project]
-name = "core"
-requires-python = ">=3.10"
-dependencies = []
-
 [tool.black]
 line-length = 120
 exclude = '''^(.*\/migrations\/.*|.*\.venv\/.*|.*\/node_modules\/.*)$'''
