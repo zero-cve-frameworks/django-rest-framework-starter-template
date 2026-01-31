@@ -115,6 +115,7 @@ JWT authentication is configured and ready to use. See [docs/authentication.md](
 1. Create a superuser: `python manage.py createsuperuser`
 2. Obtain tokens: `POST /api/token/` with username and password
 3. Use token: Include `Authorization: Bearer <token>` header in API requests
+   - In Swagger UI: Click "Authorize" and enter `Bearer <token>` (include the "Bearer " prefix)
 
 ## API Documentation
 

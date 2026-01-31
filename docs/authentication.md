@@ -126,6 +126,23 @@ The token endpoints are automatically documented in:
 
 (Only available in DEBUG mode)
 
+### Using Swagger UI with JWT Authentication
+
+1. **Get your access token** from `/api/token/` endpoint in Swagger UI
+2. **Click the "Authorize" button** (lock icon) at the top right of Swagger UI
+3. **In the "Bearer" field**, enter your token **with the "Bearer " prefix**:
+   ```
+   Bearer eyJ0eXAiOiJKV1Q...
+   ```
+   **Important:** You must include the word "Bearer " followed by a space before your token.
+4. **Click "Authorize"** and then "Close"
+5. The token will persist across page refreshes (thanks to `PERSIST_AUTH` setting)
+6. Now you can test protected endpoints - they will automatically include the `Authorization: Bearer <token>` header
+
+**Example:**
+- ✅ Correct: `Bearer eyJ0eXAiOiJKV1Q...`
+- ❌ Wrong: `eyJ0eXAiOiJKV1Q...` (missing "Bearer " prefix)
+
 ## Notes
 
 - Tokens are stateless - no database lookups required for validation
