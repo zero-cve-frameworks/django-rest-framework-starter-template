@@ -74,7 +74,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_framework_simplejwt',
 ]
 
@@ -176,7 +175,6 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
-    "SIGNING_KEY": SECRET_KEY,
 }
 
 LOGGING = {
