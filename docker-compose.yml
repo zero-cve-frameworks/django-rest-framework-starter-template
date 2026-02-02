@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    image: drfstarter:latest
+    build:
+      context: .
+    working_dir: /app
+    environment:
+      - RUN_MANAGE_TASKS=1
+    ports:
+      - "8000:8000"
